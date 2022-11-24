@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  backend:
+    container_name: backend
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - shared-net
+    image: ks/test
+    ports:
+      - "8080:8080"
+    build:
+      context: /
+      dockerfile: /Dockerfile
+  mongodb:
+    container_name: mongodb
+    networks:
+      - shared-net
+    image: bitnami/mongodb:5.0.14
+    ports:
+      - "27017:27017"
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      ALLOW_EMPTY_PASSWORD: 'yes'
+networks:
+  shared-net:
+    driver: bridge
