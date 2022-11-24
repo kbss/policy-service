@@ -67,7 +67,7 @@ public class PolicyService {
 
         validateEffectiveDate(updatePolicy);
         PolicyDocument activePolicy = policyRepository.findActivePolicy(updatePolicy.getPolicyId())
-                .orElseThrow(this::buildNotFoundException);
+                .orElseThrow(this::policyNotFoundException);
         log.info("Disabling policy: {}", activePolicy.getId());
 
         activePolicy.setActive(false);
@@ -93,15 +93,15 @@ public class PolicyService {
         policyRepository.save(policy);
     }
 
-    private NotFoundException buildNotFoundException() {
+    private NotFoundException policyNotFoundException() {
         return new NotFoundException("Active policy not found");
     }
 
     @Nonnull
     public FindPolicyResponseDTO findPolicy(@Nonnull final FindPolicyRequestDTO findPolicyRequest) {
-        log.info("Searching policy, request: [{}]", findPolicyRequest);
+        log.debug("Searching policy, request: [{}]", findPolicyRequest);
         LocalDate requestDate = Optional.ofNullable(findPolicyRequest.getRequestDate()).orElse(LocalDate.now());
-        PolicyDocument activePolicy = policyRepository.findActivePolicy(findPolicyRequest.getPolicyId(), requestDate).orElseThrow(this::buildNotFoundException);
+        PolicyDocument activePolicy = policyRepository.findActivePolicy(findPolicyRequest.getPolicyId(), requestDate).orElseThrow(this::policyNotFoundException);
         FindPolicyResponseDTO response = FindPolicyResponseDTO.builder().requestDate(requestDate).build();
         PolicyHelper.update(response, activePolicy);
         return response;
