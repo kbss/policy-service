@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -36,4 +37,6 @@ public class PolicyDocument {
     private BigDecimal totalPremium;
     @CreatedDate
     private LocalDateTime createdOn;
+    @CreatedBy
+    private String createUser;
 }
