@@ -54,8 +54,8 @@ class PolicyIntegrationTest {
 
     private static List<Arguments> invalidStartDates() {
         return List.of(
-                arguments(LocalDate.now().plusDays(1), "Start date can't be in past"),
-                arguments(LocalDate.now().minusDays(1), "Start date can't be in future")
+                arguments(LocalDate.now().plusDays(1), "Start date can't be in future"),
+                arguments(LocalDate.now().minusDays(1), "Start date can't be in past")
         );
     }
 
@@ -82,7 +82,8 @@ class PolicyIntegrationTest {
     @Test
     @DisplayName("Create a new policy")
     void createNewPolicyTest() {
-        CreatePolicyRequestDTO request = buildCreatePolicyRequest(LocalDate.now());
+        LocalDate startDate = LocalDate.now();
+        CreatePolicyRequestDTO request = buildCreatePolicyRequest(startDate);
         //@formatter:off
         RestAssured.given()
             .contentType(ContentType.JSON)
@@ -95,7 +96,7 @@ class PolicyIntegrationTest {
             .statusCode(200)
             .body("policyId", is(notNullValue()))
             .body("totalPremium", is(26.49F))
-            .body("startDate", is("2022-11-24"))
+            .body("startDate", is(startDate.toString()))
             .body("insuredPersons[0].id", is(1))
             .body("insuredPersons[0].firstName", is("First1"))
             .body("insuredPersons[0].secondName", is("Second1"))

@@ -47,9 +47,9 @@ public class PolicyService {
     private void validateStartDateInFuture(CreatePolicyRequestDTO createPolicyDTO) {
         LocalDate now = LocalDate.now();
         if (now.isAfter(createPolicyDTO.getStartDate())) {
-            throw new PolicyException("Start date can't be in future");
-        } else if (now.isBefore(createPolicyDTO.getStartDate())) {
             throw new PolicyException("Start date can't be in past");
+        } else if (now.isBefore(createPolicyDTO.getStartDate())) {
+            throw new PolicyException("Start date can't be in future");
         }
     }
 
