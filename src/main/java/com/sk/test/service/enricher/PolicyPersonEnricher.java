@@ -26,6 +26,7 @@ public class PolicyPersonEnricher implements PolicyEnricher {
                 .premium(p.getPremium())
                 .build()
         ).toList();
+
         context.getPolicyDocument().setInsuredPersons(persons);
     }
 

@@ -1,6 +1,7 @@
 package com.sk.test.service.enricher;
 
 import com.sk.test.domain.PolicyDocument;
+import com.sk.test.dto.CreatePolicyRequestDTO;
 import com.sk.test.dto.InsuredPersonDTO;
 import com.sk.test.dto.UpdatePolicyRequestDTO;
 import lombok.Builder;
@@ -17,5 +18,7 @@ public class PolicyEnricherContext {
     private UpdatePolicyRequestDTO updatePolicy;
 
     private List<InsuredPersonDTO> persons;
+
+    private CreatePolicyRequestDTO createPolicyDTO;
 
 }

@@ -38,7 +38,7 @@ public class PolicyService {
         log.trace("Request body: {}", createPolicyDTO);
         validateStartDateInFuture(createPolicyDTO);
         PolicyDocument policy = createNewPolicy();
-        enrichAndSave(policy, createPolicyDTO.getInsuredPersons());
+        enrichAndSave(policy, createPolicyDTO.getInsuredPersons(), createPolicyDTO);
         CreatePolicyResponseDTO response = CreatePolicyResponseDTO.builder().startDate(policy.getStartDate()).build();
         PolicyHelper.update(response, policy);
         return response;
@@ -89,7 +89,10 @@ public class PolicyService {
     }
 
     private void enrichAndSave(PolicyDocument policy, List<InsuredPersonDTO> updatePolicy) {
-        policyEnricherService.enrich(PolicyEnricherContext.builder().policyDocument(policy).persons(updatePolicy).build());
+        enrichAndSave(policy, updatePolicy, null);
+    }
+    private void enrichAndSave(PolicyDocument policy, List<InsuredPersonDTO> updatePolicy, CreatePolicyRequestDTO createPolicyDTO) {
+        policyEnricherService.enrich(PolicyEnricherContext.builder().policyDocument(policy).persons(updatePolicy).createPolicyDTO(createPolicyDTO).build());
         policyRepository.save(policy);
     }
 

@@ -25,9 +25,14 @@ public class PolicyPersonIdEnricher implements PolicyEnricher {
                 .stream()
                 .filter(p -> Objects.nonNull(p.getId()))
                 .mapToInt(PersonDocument::getId)
-                .max().orElse(0);
+                .max()
+                .orElse(0);
         AtomicInteger idCounter = new AtomicInteger(max);
-        context.getPolicyDocument().getInsuredPersons().stream().filter(p -> Objects.isNull(p.getId())).forEach(p -> p.setId(idCounter.incrementAndGet()));
+        context.getPolicyDocument()
+                .getInsuredPersons()
+                .stream()
+                .filter(p -> Objects.isNull(p.getId()))
+                .forEach(p -> p.setId(idCounter.incrementAndGet()));
     }
 
 }
