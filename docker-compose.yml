@@ -12,8 +12,8 @@ services:
     ports:
       - "8080:8080"
     build:
-      context: /
-      dockerfile: /Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile
   mongodb:
     container_name: mongodb
     networks:

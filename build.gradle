@@ -21,7 +21,6 @@ bootJar {
     manifest {
         attributes 'Start-Class': 'com.sk.test.TestApplication'
     }
-//    println new File("$rootDir/src/main/resources/application.properties").getText('UTF-8')
 }
 
 jar {

@@ -8,8 +8,8 @@ COPY --chown=gradle:gradle . /home/gradle/src
 USER root
 RUN chown -R gradle /home/gradle/src
 
-RUN gradle clean assemble
 COPY . .
+RUN gradle clean assemble
 
 FROM openjdk:18-jdk-alpine3.15
 ENV ARTIFACT_NAME=Test-0.0.1-SNAPSHOT.jar
